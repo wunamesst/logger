@@ -1,0 +1,228 @@
+/* Enhanced Modern Color Palette */
+:root {
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-black: #181818;
+  --vt-c-black-soft: #222222;
+  --vt-c-black-mute: #282828;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+/* Semantic color variables for this project */
+:root {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
+
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  --section-gap: 160px;
+}
+
+
+/* Enhanced Box Model Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Modern Typography System */
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: var(--line-height-relaxed);
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+p {
+  margin-bottom: var(--space-md);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Enhanced Text Utilities */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-snug { line-height: var(--line-height-snug); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+.leading-loose { line-height: var(--line-height-loose); }
+
+.text-primary { color: var(--app-text-color); }
+.text-secondary { color: var(--app-text-secondary); }
+.text-muted { color: var(--app-text-muted); }
+
+/* Code and Monospace Typography */
+code, pre, kbd, samp {
+  font-family: var(--log-font-family);
+  font-size: 0.9em;
+  background: var(--app-bg-tertiary);
+  padding: 0.125em 0.25em;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--app-border-color);
+}
+
+pre {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: var(--line-height-normal);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* Selection Styling */
+::selection {
+  background: var(--primary-200);
+  color: var(--primary-900);
+}
+
+
+/* List Styling */
+ul, ol {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-lg);
+}
+
+li {
+  margin-bottom: var(--space-xs);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-lg);
+}
+
+th, td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--app-border-color);
+}
+
+th {
+  font-weight: var(--font-weight-semibold);
+  color: var(--app-text-color);
+  background: var(--app-bg-tertiary);
+}
+
+/* Form Elements Typography */
+input, textarea, select {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

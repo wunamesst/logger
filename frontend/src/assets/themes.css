@@ -1,0 +1,331 @@
+/* ====================
+   多主题色系配置文件
+   为日志查看器提供丰富的主题选择
+   ==================== */
+
+/* 1. 经典蓝色主题 */
+[data-theme="blue-light"] {
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #f8fafc;
+  --app-bg-tertiary: #f1f5f9;
+  --app-text-color: #1e293b;
+  --app-text-muted: #64748b;
+  --app-border-color: #e2e8f0;
+
+  --theme-name: "经典蓝色";
+  --theme-description: "经典专业，稳重可靠";
+}
+
+/* 2. 森林绿色主题 */
+[data-theme="green-light"] {
+  --primary-50: #f0fdf4;
+  --primary-100: #dcfce7;
+  --primary-200: #bbf7d0;
+  --primary-300: #86efac;
+  --primary-400: #4ade80;
+  --primary-500: #059669;
+  --primary-600: #047857;
+  --primary-700: #065f46;
+  --primary-800: #064e3b;
+  --primary-900: #022c22;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #f7fef9;
+  --app-bg-tertiary: #ecfdf5;
+  --app-text-color: #1f2937;
+  --app-text-muted: #6b7280;
+  --app-border-color: #d1fae5;
+
+  --theme-name: "森林绿色";
+  --theme-description: "护眼清新，自然专业";
+}
+
+/* 3. 深紫色主题 */
+[data-theme="purple-light"] {
+  --primary-50: #faf5ff;
+  --primary-100: #f3e8ff;
+  --primary-200: #e9d5ff;
+  --primary-300: #d8b4fe;
+  --primary-400: #c084fc;
+  --primary-500: #7c3aed;
+  --primary-600: #6d28d9;
+  --primary-700: #5b21b6;
+  --primary-800: #4c1d95;
+  --primary-900: #3c1361;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #faf5ff;
+  --app-bg-tertiary: #f3e8ff;
+  --app-text-color: #1f2937;
+  --app-text-muted: #6b7280;
+  --app-border-color: #e9d5ff;
+
+  --theme-name: "深紫色";
+  --theme-description: "现代科技，创新智慧";
+}
+
+/* 4. 橙红色主题 */
+[data-theme="orange-light"] {
+  --primary-50: #fff7ed;
+  --primary-100: #ffedd5;
+  --primary-200: #fed7aa;
+  --primary-300: #fdba74;
+  --primary-400: #fb923c;
+  --primary-500: #ea580c;
+  --primary-600: #dc2626;
+  --primary-700: #b91c1c;
+  --primary-800: #991b1b;
+  --primary-900: #7f1d1d;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #fff7ed;
+  --app-bg-tertiary: #ffedd5;
+  --app-text-color: #1f2937;
+  --app-text-muted: #6b7280;
+  --app-border-color: #fed7aa;
+
+  --theme-name: "橙红色";
+  --theme-description: "活力专注，醒目警觉";
+}
+
+/* 5. 石墨灰主题 */
+[data-theme="gray-light"] {
+  --primary-50: #f9fafb;
+  --primary-100: #f3f4f6;
+  --primary-200: #e5e7eb;
+  --primary-300: #d1d5db;
+  --primary-400: #9ca3af;
+  --primary-500: #374151;
+  --primary-600: #1f2937;
+  --primary-700: #111827;
+  --primary-800: #0f172a;
+  --primary-900: #0c0a09;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #f9fafb;
+  --app-bg-tertiary: #f3f4f6;
+  --app-text-color: #111827;
+  --app-text-muted: #6b7280;
+  --app-border-color: #e5e7eb;
+
+  --theme-name: "石墨灰";
+  --theme-description: "极简高级，沉稳专业";
+}
+
+/* 6. 青绿色主题 */
+[data-theme="cyan-light"] {
+  --primary-50: #ecfeff;
+  --primary-100: #cffafe;
+  --primary-200: #a5f3fc;
+  --primary-300: #67e8f9;
+  --primary-400: #22d3ee;
+  --primary-500: #0891b2;
+  --primary-600: #0e7490;
+  --primary-700: #155e75;
+  --primary-800: #164e63;
+  --primary-900: #083344;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #ecfeff;
+  --app-bg-tertiary: #cffafe;
+  --app-text-color: #1f2937;
+  --app-text-muted: #6b7280;
+  --app-border-color: #a5f3fc;
+
+  --theme-name: "青绿色";
+  --theme-description: "清新现代，冷静高效";
+}
+
+/* 7. 琥珀金主题 */
+[data-theme="amber-light"] {
+  --primary-50: #fffbeb;
+  --primary-100: #fef3c7;
+  --primary-200: #fde68a;
+  --primary-300: #fcd34d;
+  --primary-400: #fbbf24;
+  --primary-500: #d97706;
+  --primary-600: #b45309;
+  --primary-700: #92400e;
+  --primary-800: #78350f;
+  --primary-900: #451a03;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #fffbeb;
+  --app-bg-tertiary: #fef3c7;
+  --app-text-color: #1f2937;
+  --app-text-muted: #6b7280;
+  --app-border-color: #fde68a;
+
+  --theme-name: "琥珀金";
+  --theme-description: "温暖专业，积极友好";
+}
+
+/* ====================
+   主题切换动画效果
+   ==================== */
+
+html {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  transition:
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ====================
+   主题预览样式
+   ==================== */
+
+.theme-preview {
+  width: 60px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid var(--app-border-color);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-preview:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-preview.active {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(var(--primary-500), 0.2);
+}
+
+.theme-preview-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-preview-header {
+  height: 40%;
+  background: var(--primary-500);
+}
+
+.theme-preview-body {
+  height: 60%;
+  background: var(--app-bg-secondary);
+  position: relative;
+}
+
+.theme-preview-accent {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  background: var(--primary-400);
+  border-radius: 1px;
+}
+
+/* ====================
+   主题选择器样式
+   ==================== */
+
+.theme-selector {
+  position: relative;
+}
+
+.theme-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: var(--z-dropdown);
+  background: var(--app-bg-secondary);
+  border: 1px solid var(--app-border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-md);
+  min-width: 280px;
+  backdrop-filter: var(--app-backdrop-blur);
+  -webkit-backdrop-filter: var(--app-backdrop-blur);
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.theme-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.theme-item:hover {
+  background: var(--app-bg-tertiary);
+}
+
+.theme-item.active {
+  background: var(--primary-50);
+}
+
+.theme-name {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--app-text-color);
+  text-align: center;
+}
+
+.theme-description {
+  font-size: var(--font-size-xs);
+  color: var(--app-text-muted);
+  text-align: center;
+  line-height: var(--line-height-tight);
+}
+
+/* ====================
+   主题自动检测支持
+   ==================== */
+
+/* 系统主题 - 使用浅色主题 */
+[data-theme="system"] {
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  --app-bg-primary: #ffffff;
+  --app-bg-secondary: #f8fafc;
+  --app-bg-tertiary: #f1f5f9;
+  --app-text-color: #1e293b;
+  --app-text-muted: #64748b;
+  --app-border-color: #e2e8f0;
+
+  --theme-name: "跟随系统";
+  --theme-description: "自动适应系统设置";
+}

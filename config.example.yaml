@@ -1,0 +1,26 @@
+# 本地日志查看工具配置文件示例
+
+server:
+  host: "0.0.0.0"          # 服务器绑定地址
+  port: 8080               # 服务器端口
+  logPaths:                # 日志文件路径列表
+    - "./logs"
+    - "/var/log"
+  maxFileSize: 104857600   # 最大文件大小 (100MB)
+  cacheSize: 50            # 文件缓存数量
+
+logging:
+  level: "info"            # 日志级别: debug, info, warn, error
+  format: "json"           # 日志格式: json, text
+  outputPath: "stdout"     # 日志输出路径: stdout, stderr, 或文件路径
+
+security:
+  enableAuth: false        # 是否启用认证
+  username: ""             # 用户名
+  password: ""             # 密码
+  allowedIPs: []           # 允许访问的IP列表，空表示允许所有IP
+  tls:
+    enabled: false         # 是否启用HTTPS
+    certFile: ""           # TLS证书文件路径
+    keyFile: ""            # TLS私钥文件路径
+    autoCert: false        # 是否自动生成自签名证书
