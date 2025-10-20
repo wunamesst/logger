@@ -41,7 +41,7 @@ const defaultSettings: Settings = {
     lineHeight: 1.5,
     fontFamily: 'Consolas, Monaco, "Courier New", monospace',
     showLineNumbers: true,
-    wordWrap: false
+    wordWrap: true
   },
   performance: {
     cacheSize: 50, // MB

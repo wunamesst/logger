@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
     lineHeight: 1.5,
     fontFamily: 'Consolas, Monaco, "Courier New", monospace',
     showLineNumbers: true,
-    wordWrap: false
+    wordWrap: true
   })
 })
 
