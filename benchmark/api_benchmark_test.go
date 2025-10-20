@@ -24,6 +24,16 @@ import (
 // MockLogManager 模拟日志管理器
 type MockLogManager struct{}
 
+// GetLogPaths implements interfaces.LogManager.
+func (m *MockLogManager) GetLogPaths() []string {
+	panic("unimplemented")
+}
+
+// ReadLogFileFromTail implements interfaces.LogManager.
+func (m *MockLogManager) ReadLogFileFromTail(path string, lines int) (*types.LogContent, error) {
+	panic("unimplemented")
+}
+
 func (m *MockLogManager) GetLogFiles() ([]types.LogFile, error) {
 	return []types.LogFile{
 		{Name: "small.log", Path: "small.log", Size: 1024, ModTime: time.Now()},

@@ -1299,7 +1299,7 @@ onUnmounted(() => {
           </el-button>
         </el-tooltip>
 
-        <div class="log-stats">
+        <!-- <div class="log-stats">
           <span class="stat-item">总行数: {{ totalLines.toLocaleString() }}</span>
           <span class="stat-item">已加载: {{ logEntries.length.toLocaleString() }}</span>
           <span v-if="earliestLineNum && latestLineNum" class="stat-item range-info">
@@ -1315,7 +1315,7 @@ onUnmounted(() => {
           <span v-if="isLoadingEarlier" class="stat-item loading-info">正在加载历史数据...</span>
           <span class="stat-item virtual-info">虚拟滚动已启用</span>
           <span class="stat-item mode-info">Tail -f 模式</span>
-        </div>
+        </div> -->
       </div>
 
       <div class="toolbar-right">
