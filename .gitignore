@@ -23,7 +23,7 @@ go.work
 .kiro
 .cursor
 .claude
-.playwright
+.playwright-mcp
 *.swp
 *.swo
 
