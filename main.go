@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"flag"
 	"fmt"
 	"log"
@@ -17,9 +16,6 @@ import (
 	"github.com/local-log-viewer/internal/watcher"
 	"go.uber.org/zap"
 )
-
-//go:embed all:web
-var StaticFiles embed.FS
 
 var (
 	version = "dev"
