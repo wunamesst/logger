@@ -20,9 +20,10 @@ go.work
 # IDE files
 .vscode/
 .idea/
-.kiro/
-.cursor/
-.claude/
+.kiro
+.cursor
+.claude
+.playwright
 *.swp
 *.swo
 
