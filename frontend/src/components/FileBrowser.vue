@@ -336,6 +336,7 @@ defineExpose({
           :props="treeProps"
           :load="isLazyMode ? loadNode : undefined"
           :lazy="isLazyMode"
+          :indent="20"
           :expand-on-click-node="true"
           :highlight-current="true"
           :current-node-key="selectedPath"
@@ -647,7 +648,8 @@ defineExpose({
 
 /* Tree component deep styling */
 :deep(.el-tree-node__content) {
-  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   background: transparent !important;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
