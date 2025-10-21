@@ -116,12 +116,17 @@ func LoadWithOptions(options *CommandLineOptions) (*Config, error) {
 	cfg := DefaultConfig()
 
 	// 如果指定了配置文件，则加载配置文件
-	// 如果未指定,尝试查找当前目录的 config.yaml
+	// 如果未指定,尝试查找二进制文件所在目录的 config.yaml
 	configPath := options.ConfigPath
 	if configPath == "" {
-		defaultConfigPath := "config.yaml"
-		if _, err := os.Stat(defaultConfigPath); err == nil {
-			configPath = defaultConfigPath
+		// 获取二进制文件所在目录
+		exePath, err := os.Executable()
+		if err == nil {
+			exeDir := filepath.Dir(exePath)
+			defaultConfigPath := filepath.Join(exeDir, "config.yaml")
+			if _, err := os.Stat(defaultConfigPath); err == nil {
+				configPath = defaultConfigPath
+			}
 		}
 	}
 
