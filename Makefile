@@ -51,11 +51,21 @@ release:
 	@for file in $(BUILD_DIR)/$(APP_NAME)-*; do \
 		if [ -f "$$file" ]; then \
 			basename=$$(basename "$$file"); \
+			platform=$$(echo "$$basename" | sed 's/$(APP_NAME)-//'); \
 			echo "打包 $$basename..."; \
 			if [[ "$$basename" == *".exe" ]]; then \
-				zip -j "$(BUILD_DIR)/release/$${basename%.exe}.zip" "$$file" README.md config.example.yaml; \
+				platform=$${platform%.exe}; \
+				tmpdir=$$(mktemp -d); \
+				cp "$$file" "$$tmpdir/$(APP_NAME).exe"; \
+				cp README.md config.example.yaml "$$tmpdir/"; \
+				(cd "$$tmpdir" && zip -r - .) > "$(BUILD_DIR)/release/$(APP_NAME)-$$platform.zip"; \
+				rm -rf "$$tmpdir"; \
 			else \
-				tar -czf "$(BUILD_DIR)/release/$$basename.tar.gz" -C $(BUILD_DIR) "$${basename##*/}" -C .. README.md config.example.yaml; \
+				tmpdir=$$(mktemp -d); \
+				cp "$$file" "$$tmpdir/$(APP_NAME)"; \
+				cp README.md config.example.yaml "$$tmpdir/"; \
+				tar -czf "$(BUILD_DIR)/release/$(APP_NAME)-$$platform.tar.gz" -C "$$tmpdir" .; \
+				rm -rf "$$tmpdir"; \
 			fi; \
 		fi; \
 	done

@@ -17,11 +17,14 @@ const selectedPath = ref<string>('')
 const expandedKeys = ref<string[]>([])
 const filterText = ref<string>('')
 
+// 懒加载模式标志
+const lazyMode = ref(true)
+
 // Tree props configuration
 const treeProps = {
   label: 'name',
   children: 'children',
-  isLeaf: 'isLeaf'
+  isLeaf: (data: LogFile) => !data.isDirectory
 }
 
 // 递归过滤文件树节点
@@ -71,8 +74,19 @@ const collectExpandedKeys = (nodes: LogFile[], keys: string[] = []): string[] =>
 }
 
 // Computed properties
+const isLazyMode = computed(() => {
+  return lazyMode.value && !filterText.value.trim()
+})
+
 const treeData = computed(() => {
   if (!filterText.value.trim()) {
+    return logFiles.value
+  }
+
+  // 搜索模式下,如果当前是懒加载模式,需要切换到完整模式
+  if (lazyMode.value) {
+    // 异步加载完整数据
+    loadFullTreeForSearch()
     return logFiles.value
   }
 
@@ -87,6 +101,14 @@ const treeData = computed(() => {
 
   return filtered
 })
+
+// 为搜索加载完整树
+const loadFullTreeForSearch = async () => {
+  if (!lazyMode.value) return // 已经是完整模式
+
+  lazyMode.value = false
+  await loadLogFiles()
+}
 
 // 统计匹配的文件数量
 const matchedFileCount = computed(() => {
@@ -163,8 +185,15 @@ const addIsLeafProperty = (files: LogFile[]): LogFile[] => {
 const loadLogFiles = async () => {
   loading.value = true
   try {
-    const files = await apiService.getLogFiles()
-    logFiles.value = addIsLeafProperty(files)
+    if (lazyMode.value) {
+      // 懒加载模式: 只加载根目录
+      const files = await apiService.getDirectoryFiles('')
+      logFiles.value = files
+    } else {
+      // 完整加载模式: 加载整个树(用于搜索)
+      const files = await apiService.getLogFiles()
+      logFiles.value = addIsLeafProperty(files)
+    }
 
     // Don't auto-expand directories - let user manually expand them
     expandedKeys.value = []
@@ -174,6 +203,29 @@ const loadLogFiles = async () => {
     ElMessage.error('加载日志文件失败')
   } finally {
     loading.value = false
+  }
+}
+
+// 懒加载子节点
+const loadNode = async (node: any, resolve: (data: LogFile[]) => void) => {
+  if (node.level === 0) {
+    // 根节点,返回已加载的根目录列表
+    return resolve(logFiles.value)
+  }
+
+  if (node.data.isDirectory) {
+    // 加载子目录
+    try {
+      const children = await apiService.getDirectoryFiles(node.data.path)
+      resolve(children)
+    } catch (error) {
+      console.error('Failed to load directory:', error)
+      ElMessage.error(`加载目录失败: ${node.data.name}`)
+      resolve([])
+    }
+  } else {
+    // 文件节点没有子节点
+    resolve([])
   }
 }
 
@@ -193,9 +245,15 @@ const handleRefresh = () => {
 }
 
 // Handle search clear
-const handleClearSearch = () => {
+const handleClearSearch = async () => {
   filterText.value = ''
   expandedKeys.value = []
+
+  // 切换回懒加载模式
+  if (!lazyMode.value) {
+    lazyMode.value = true
+    await loadLogFiles()
+  }
 }
 
 // Listen for WebSocket file updates
@@ -272,13 +330,17 @@ defineExpose({
     <div class="browser-content">
       <div class="content-wrapper">
         <el-tree
+          :key="lazyMode ? 'lazy' : 'full'"
           v-loading="loading"
-          :data="treeData"
+          :data="isLazyMode ? logFiles : treeData"
           :props="treeProps"
+          :load="isLazyMode ? loadNode : undefined"
+          :lazy="isLazyMode"
+          :indent="20"
           :expand-on-click-node="true"
           :highlight-current="true"
           :current-node-key="selectedPath"
-          :expanded-keys="expandedKeys"
+          :expanded-keys="!isLazyMode ? expandedKeys : undefined"
           node-key="path"
           @node-click="handleNodeClick"
           class="file-tree"
@@ -586,7 +648,8 @@ defineExpose({
 
 /* Tree component deep styling */
 :deep(.el-tree-node__content) {
-  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   background: transparent !important;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);

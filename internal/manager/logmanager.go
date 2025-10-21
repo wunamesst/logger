@@ -139,6 +139,122 @@ func (lm *LogManager) GetLogFiles() ([]types.LogFile, error) {
 	return lm.buildFileTree(allFiles), nil
 }
 
+// GetDirectoryFiles 获取指定目录的直接子节点(用于懒加载)
+func (lm *LogManager) GetDirectoryFiles(dirPath string) ([]types.LogFile, error) {
+	lm.mutex.RLock()
+	defer lm.mutex.RUnlock()
+
+	// 如果目录路径为空,返回根目录列表
+	if dirPath == "" {
+		return lm.getRootDirectories()
+	}
+
+	// 检查目录是否存在
+	info, err := os.Stat(dirPath)
+	if err != nil {
+		return nil, fmt.Errorf("目录不存在: %w", err)
+	}
+
+	if !info.IsDir() {
+		return nil, fmt.Errorf("路径不是目录: %s", dirPath)
+	}
+
+	// 读取目录内容
+	entries, err := os.ReadDir(dirPath)
+	if err != nil {
+		return nil, fmt.Errorf("读取目录失败: %w", err)
+	}
+
+	var files []types.LogFile
+
+	for _, entry := range entries {
+		// 跳过隐藏文件
+		if strings.HasPrefix(entry.Name(), ".") {
+			continue
+		}
+
+		fullPath := filepath.Join(dirPath, entry.Name())
+		info, err := entry.Info()
+		if err != nil {
+			continue
+		}
+
+		// 如果是目录,直接添加
+		if entry.IsDir() {
+			files = append(files, types.LogFile{
+				Path:        fullPath,
+				Name:        entry.Name(),
+				Size:        0,
+				ModTime:     info.ModTime(),
+				IsDirectory: true,
+			})
+		} else if lm.isLogFile(fullPath) {
+			// 如果是日志文件,检查大小限制
+			if info.Size() <= lm.config.Server.MaxFileSize {
+				files = append(files, types.LogFile{
+					Path:        fullPath,
+					Name:        entry.Name(),
+					Size:        info.Size(),
+					ModTime:     info.ModTime(),
+					IsDirectory: false,
+				})
+			}
+		}
+	}
+
+	// 按名称排序
+	sort.Slice(files, func(i, j int) bool {
+		// 目录排在文件前面
+		if files[i].IsDirectory != files[j].IsDirectory {
+			return files[i].IsDirectory
+		}
+		return files[i].Name < files[j].Name
+	})
+
+	return files, nil
+}
+
+// getRootDirectories 获取根目录列表
+func (lm *LogManager) getRootDirectories() ([]types.LogFile, error) {
+	var roots []types.LogFile
+
+	for _, rootPath := range lm.config.Server.LogPaths {
+		absPath, err := filepath.Abs(rootPath)
+		if err != nil {
+			continue
+		}
+
+		info, err := os.Stat(absPath)
+		if err != nil {
+			continue
+		}
+
+		if info.IsDir() {
+			// 作为根目录节点
+			roots = append(roots, types.LogFile{
+				Path:        absPath,
+				Name:        filepath.Base(absPath),
+				Size:        0,
+				ModTime:     info.ModTime(),
+				IsDirectory: true,
+			})
+		} else if lm.isLogFile(absPath) {
+			// 作为根文件
+			if info.Size() <= lm.config.Server.MaxFileSize {
+				roots = append(roots, types.LogFile{
+					Path:        absPath,
+					Name:        info.Name(),
+					Size:        info.Size(),
+					ModTime:     info.ModTime(),
+					IsDirectory: false,
+				})
+			}
+		}
+	}
+
+	return roots, nil
+}
+
 // scanDirectory 递归扫描目录
 func (lm *LogManager) scanDirectory(dirPath string) ([]types.LogFile, error) {
 	var files []types.LogFile

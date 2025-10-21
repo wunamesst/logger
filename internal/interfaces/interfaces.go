@@ -9,6 +9,9 @@ type LogManager interface {
 	// GetLogFiles 获取日志文件列表
 	GetLogFiles() ([]types.LogFile, error)
 
+	// GetDirectoryFiles 获取指定目录的直接子节点(用于懒加载)
+	GetDirectoryFiles(dirPath string) ([]types.LogFile, error)
+
 	// ReadLogFile 读取日志文件内容
 	ReadLogFile(path string, offset int64, limit int) (*types.LogContent, error)
 
