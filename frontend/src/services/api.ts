@@ -55,6 +55,20 @@ class ApiService {
     return result.data || []
   }
 
+  async getDirectoryFiles(path: string = ''): Promise<LogFile[]> {
+    const params = new URLSearchParams()
+    if (path) {
+      params.append('path', path)
+    }
+
+    const response = await fetch(`${this.baseUrl}/logs/directory?${params}`)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch directory files: ${response.statusText}`)
+    }
+    const result = await response.json()
+    return result.data || []
+  }
+
   async getLogContent(path: string, offset = 0, limit = 100): Promise<LogContent> {
     const params = new URLSearchParams({
       offset: offset.toString(),

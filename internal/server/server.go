@@ -257,6 +257,7 @@ func (s *HTTPServer) setupRoutes() {
 	api.Use(middleware.BasicAuth(&s.config.Security))
 	{
 		api.GET("/logs", s.getLogFiles)
+		api.GET("/logs/directory", s.getDirectoryFiles)
 		api.GET("/logs/content/*path", s.getLogContent)
 		api.GET("/logs/tail/*path", s.getLogContentFromTail)
 		api.GET("/search", s.searchLogs)
@@ -282,6 +283,28 @@ func (s *HTTPServer) getLogFiles(c *gin.Context) {
 	}
 
 	logger.Debug("retrieved log files", zap.Int("count", len(files)))
+
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"data":    files,
+		"count":   len(files),
+	})
+}
+
+// getDirectoryFiles 获取指定目录的直接子节点 API (用于懒加载)
+func (s *HTTPServer) getDirectoryFiles(c *gin.Context) {
+	// 获取查询参数
+	dirPath := c.DefaultQuery("path", "")
+
+	files, err := s.logManager.GetDirectoryFiles(dirPath)
+	if err != nil {
+		c.Error(errors.WrapError(err, errors.ErrorTypeInternalError, "failed to get directory files"))
+		return
+	}
+
+	logger.Debug("retrieved directory files",
+		zap.String("path", dirPath),
+		zap.Int("count", len(files)))
 
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
