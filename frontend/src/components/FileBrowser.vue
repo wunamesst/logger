@@ -24,7 +24,7 @@ const lazyMode = ref(true)
 const treeProps = {
   label: 'name',
   children: 'children',
-  isLeaf: (data: LogFile) => !data.isDirectory
+  isLeaf: (data: any) => !data.isDirectory
 }
 
 // 递归过滤文件树节点
@@ -267,7 +267,7 @@ const handleFileUpdate = (message: any) => {
 // Lifecycle hooks
 onMounted(() => {
   loadLogFiles()
-  
+
   // Listen for WebSocket updates
   wsService.on('message', handleFileUpdate)
 })
@@ -283,38 +283,13 @@ defineExpose({
 
 <template>
   <div class="file-browser elevated-surface">
-    <div class="browser-header glass-effect">
-      <div class="header-top">
-        <div class="header-title">
-          <div class="title-icon">
-            <el-icon><Folder /></el-icon>
-          </div>
-          <div class="title-content">
-            <h3 class="title-text">日志文件</h3>
-            <p class="title-subtitle">浏览和选择日志文件</p>
-          </div>
-        </div>
-
-        <div class="header-actions">
-          <el-tooltip content="刷新文件列表" placement="bottom">
-            <el-button
-              class="refresh-btn"
-              size="small"
-              :icon="Refresh"
-              :loading="loading"
-              @click="handleRefresh"
-              circle
-            />
-          </el-tooltip>
-        </div>
-      </div>
-
-      <div class="header-search">
+    <div class="browser-header">
+      <div class="header-content">
         <el-input
           v-model="filterText"
-          placeholder="搜索文件名..."
+          placeholder="搜索日志文件..."
           class="search-input"
-          size="small"
+          size="default"
           clearable
           @clear="handleClearSearch"
         >
@@ -324,6 +299,17 @@ defineExpose({
             </el-icon>
           </template>
         </el-input>
+
+        <el-tooltip content="刷新文件列表" placement="bottom">
+          <el-button
+            class="refresh-btn"
+            size="default"
+            :icon="Refresh"
+            :loading="loading"
+            @click="handleRefresh"
+            circle
+          />
+        </el-tooltip>
       </div>
     </div>
 
@@ -399,73 +385,19 @@ defineExpose({
 }
 
 .browser-header {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--app-border-color);
   background: var(--app-bg-secondary);
-  gap: var(--space-md);
 }
 
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-title {
+.header-content {
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  flex-shrink: 0;
-}
-
-.title-icon {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary-500);
-  border-radius: var(--radius-lg);
-  color: white;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
-}
-
-.title-icon:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-  background: var(--primary-600);
-}
-
-.title-content {
-  flex: 1;
-}
-
-.title-text {
-  margin: 0;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--app-text-color);
-  line-height: var(--line-height-tight);
-}
-
-.title-subtitle {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  color: var(--app-text-muted);
-  line-height: var(--line-height-normal);
-  margin-top: var(--space-xs);
-}
-
-.header-search {
-  width: 100%;
 }
 
 .search-input {
-  width: 100%;
+  flex: 1;
 }
 
 :deep(.search-input .el-input__wrapper) {
@@ -474,42 +406,55 @@ defineExpose({
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-xs);
   transition: all var(--transition-normal);
+  height: 44px;
 }
 
 :deep(.search-input .el-input__wrapper:hover) {
   border-color: var(--primary-300);
   box-shadow: var(--shadow-sm);
+  background: var(--app-bg-secondary);
 }
 
 :deep(.search-input .el-input__wrapper.is-focus) {
   border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  background: white;
+}
+
+:deep(.search-input .el-input__inner) {
+  font-size: var(--font-size-base);
 }
 
 .search-icon {
   color: var(--app-text-muted);
-  font-size: 14px;
+  font-size: 16px;
+  transition: color var(--transition-fast);
 }
 
-.header-actions {
-  display: flex;
-  gap: var(--space-sm);
-  flex-shrink: 0;
+:deep(.search-input .el-input__wrapper.is-focus) .search-icon {
+  color: var(--primary-500);
 }
 
 .refresh-btn {
+  width: 44px;
+  height: 44px;
   background: var(--app-bg-tertiary);
   border: 1px solid var(--app-border-color);
   color: var(--app-text-color);
   transition: all var(--transition-normal);
+  flex-shrink: 0;
 }
 
 .refresh-btn:hover {
   background: var(--primary-50);
-  border-color: var(--primary-200);
+  border-color: var(--primary-300);
   color: var(--primary-600);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px) rotate(90deg);
+  box-shadow: var(--shadow-md);
+}
+
+.refresh-btn:active {
+  transform: translateY(0) rotate(180deg);
 }
 
 .browser-content {
@@ -538,6 +483,15 @@ defineExpose({
   transition: all var(--transition-fast);
   margin-bottom: var(--space-xs);
   border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.tree-node:hover {
+  background: var(--app-bg-tertiary);
+}
+
+.tree-node.is-selected {
+  background: var(--primary-100);
 }
 
 
@@ -598,6 +552,7 @@ defineExpose({
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color var(--transition-fast);
+  flex: 1;
 }
 
 .tree-node:hover .node-label {
@@ -608,7 +563,6 @@ defineExpose({
   color: var(--primary-700);
   font-weight: var(--font-weight-semibold);
 }
-
 
 .file-size-info {
   display: flex;
@@ -715,24 +669,34 @@ defineExpose({
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .browser-header {
-    padding: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
   }
 
-  .title-icon {
-    width: 32px;
-    height: 32px;
+  .search-input {
+    font-size: var(--font-size-sm);
   }
 
-  .title-text {
-    font-size: var(--font-size-base);
-  }
-
-  .title-subtitle {
-    display: none;
+  .refresh-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .content-wrapper {
     padding: var(--space-sm);
+  }
+
+  .tree-node {
+    padding: var(--space-xs) var(--space-sm);
+    min-height: 38px;
+  }
+
+  .node-icon-wrapper {
+    width: 28px;
+    height: 28px;
+  }
+
+  .node-icon {
+    font-size: 18px;
   }
 }
 
