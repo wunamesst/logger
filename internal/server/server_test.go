@@ -23,6 +23,11 @@ type MockLogManager struct {
 	err     error
 }
 
+// GetDirectoryFiles implements interfaces.LogManager.
+func (m *MockLogManager) GetDirectoryFiles(dirPath string) ([]types.LogFile, error) {
+	panic("unimplemented")
+}
+
 // GetLogPaths implements interfaces.LogManager.
 func (m *MockLogManager) GetLogPaths() []string {
 	panic("unimplemented")

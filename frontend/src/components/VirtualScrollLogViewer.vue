@@ -1608,9 +1608,8 @@ onUnmounted(() => {
 }
 
 .entry-hovered {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-left: 3px solid #409eff;
-  padding-left: 13px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 3px 0 0 rgba(255, 255, 255, 0.8);
   transition: all 0.2s ease;
 }
 
